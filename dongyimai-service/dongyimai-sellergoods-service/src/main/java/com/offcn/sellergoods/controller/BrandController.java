@@ -5,10 +5,13 @@ import com.offcn.entity.Result;
 import com.offcn.entity.StatusCode;
 import com.offcn.sellergoods.pojo.Brand;
 import com.offcn.sellergoods.service.BrandService;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/brand")
@@ -129,5 +132,10 @@ public class BrandController {
         //执行搜索
         PageResult<Brand> pageResult = brandService.findPage(brand, page, size);
         return new Result(true,StatusCode.OK,"查询成功",pageResult);
+    }
+    @ApiOperation(value = "查询品牌下拉列表",notes = "查询品牌下拉列表",tags = {"BrandController"})
+    @GetMapping("/selectOptions")
+    public ResponseEntity<List<Map>> selectOptions(){
+        return ResponseEntity.ok(brandService.selectOptions());
     }
 }

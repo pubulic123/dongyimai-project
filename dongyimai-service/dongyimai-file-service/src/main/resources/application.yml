@@ -14,4 +14,4 @@ eureka:
   instance:
     prefer-ip-address: true
 
-FILE_SERVER_URL: http://192.168.237.128:8080/
+FILE_SERVER_URL: http://192.168.237.128:5488/

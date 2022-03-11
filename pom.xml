@@ -75,6 +75,30 @@
         <artifactId>fastjson</artifactId>
         <version>${fastjson.version}</version>
     </dependency>
+
+<!--        swagger-->
+<!--         https://mvnrepository.com/artifact/io.springfox/springfox-swagger2 -->
+         <dependency>
+            <groupId>io.springfox</groupId>
+            <artifactId>springfox-swagger2</artifactId>
+            <version>${swagger.version}</version>
+        </dependency>
+<!--         https://mvnrepository.com/artifact/io.springfox/springfox-swagger-ui -->
+         <dependency>
+            <groupId>io.springfox</groupId>
+            <artifactId>springfox-swagger-ui</artifactId>
+            <version>${swagger.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.swagger</groupId>
+            <artifactId>swagger-annotations</artifactId>
+            <version>1.5.21</version>
+        </dependency>
+        <dependency>
+            <groupId>io.swagger</groupId>
+            <artifactId>swagger-models</artifactId>
+            <version>1.5.21</version>
+        </dependency>
     </dependencies>
 
     <build>

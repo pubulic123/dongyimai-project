@@ -11,7 +11,7 @@ public class PageConfig {
     @Bean
     public MybatisPlusInterceptor mybatisPlusInterceptor(){
         MybatisPlusInterceptor interceptor = new MybatisPlusInterceptor();
-        PaginationInnerInterceptor paginationInnerInterceptor = new        PaginationInnerInterceptor();
+        PaginationInnerInterceptor paginationInnerInterceptor = new  PaginationInnerInterceptor();
         paginationInnerInterceptor.setDbType(DbType.MYSQL);
         //设置请求的页面大于最大页后操作，true调回到首页，false继续请求 默认false
         paginationInnerInterceptor.setOverflow(true);

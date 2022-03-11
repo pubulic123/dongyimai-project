@@ -7,14 +7,20 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.offcn.entity.PageResult;
 import com.offcn.sellergoods.dao.BrandMapper;
 import com.offcn.sellergoods.pojo.Brand;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.annotation.Reference;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
 import java.util.List;
+import java.util.Map;
 
+//品牌服务
 @Service
 public class BrandServiceImpl extends ServiceImpl<BrandMapper, Brand> implements BrandService {
 
+    @Reference
+    private BrandMapper brandMapper;
     /**
      * 全部数据
      * @return
@@ -128,5 +134,11 @@ public class BrandServiceImpl extends ServiceImpl<BrandMapper, Brand> implements
         IPage<Brand> iPage = this.page(mypage, queryWrapper);
         return new PageResult<Brand>(iPage.getTotal(),iPage.getRecords());
     }
+
+    @Override
+    public List<Map> selectOptions() {
+        return brandMapper.selectOptions();
+    }
+
 
 }

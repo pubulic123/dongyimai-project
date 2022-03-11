@@ -4,6 +4,7 @@ import com.offcn.entity.PageResult;
 import com.offcn.sellergoods.pojo.Brand;
 
 import java.util.List;
+import java.util.Map;
 
 public interface BrandService {
 
@@ -60,4 +61,10 @@ public interface BrandService {
      * @return
      */
     PageResult<Brand> findPage(Brand brand, int page, int size);
+
+    /**
+     * 查询品牌下拉列表
+     * @return
+     */
+    public List<Map> selectOptions();
 }
