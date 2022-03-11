@@ -19,7 +19,7 @@ import java.util.Map;
 @Service
 public class BrandServiceImpl extends ServiceImpl<BrandMapper, Brand> implements BrandService {
 
-    @Reference
+    @Autowired
     private BrandMapper brandMapper;
     /**
      * 全部数据

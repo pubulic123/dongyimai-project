@@ -28,9 +28,9 @@ import java.util.Map;
  *****/
 @Service
 public class SpecificationServiceImpl extends ServiceImpl<SpecificationMapper,Specification> implements SpecificationService {
- @Reference
+ @Autowired
   private  SpecificationOptionMapper specificationOptionMapper;
-  @Reference
+  @Autowired
   private SpecificationMapper specificationMapper;
 
 
