@@ -1,13 +1,13 @@
 server:
-  port: 9991
+  port: 9004
 spring:
   main: #允许多个feign调用同一个服务
     allow-bean-definition-overriding: true
   application:
-    name: dym-sellergoods
+    name: content
   datasource:
     driver-class-name: com.mysql.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/dongyimaidb?useUnicode=true&characterEncoding=UTF-8&serverTimezone=GMT%2B8
+    url: jdbc:mysql://192.168.237.128:3306/dongyimaidb?useUnicode=true&characterEncoding=UTF-8&serverTimezone=GMT%2B8
     username: root
     password: 138687
     type: com.alibaba.druid.pool.DruidDataSource
@@ -27,12 +27,12 @@ eureka:
 feign:
   hystrix:
     enabled: true
-mybatis-plus:
+mybatis:
   configuration:
     map-underscore-to-camel-case: true  #开启驼峰式编写规范
-  type-aliases-package: com.offcn.sellergoods.pojo
+  type-aliases-package: com.offcn.content.pojo
 # 配置sql打印日志
 logging:
   level:
-    com:
-      offcn: debug
+    com.offcn.content: debug
+

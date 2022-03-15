@@ -9,7 +9,7 @@ import java.io.IOException;
 public class TestFastDFS {
     public static void main(String[] args) throws IOException, MyException {
         // 1、加载配置文件，配置文件中的内容就是 tracker 服务的地址。
-        ClientGlobal.init("C:\\idea_workspace_offcn\\2021shadow\\github\\dongyimai-parent\\dongyimai-service\\dongyimai-file-service\\src\\main\\resources\\fdfs_client.conf");
+        ClientGlobal.init("F:\\IdeaProjects\\dongyimai-parent\\dongyimai-service\\dongyimai-file-service\\src\\main\\resources\\fdfs_client.conf");
         // 2、创建一个 TrackerClient 对象。直接 new 一个。
         TrackerClient trackerClient = new TrackerClient();
         // 3、使用 TrackerClient 对象创建连接，获得一个 TrackerServer 对象。
@@ -20,7 +20,7 @@ public class TestFastDFS {
         StorageClient storageClient = new StorageClient(trackerServer, storageServer);
         // 6、使用 StorageClient 对象上传图片。
         //扩展名不带“.”
-        String[] strings = storageClient.upload_file("C:/1.jpg", "jpg",
+        String[] strings = storageClient.upload_file("C:\\Users\\86173\\Desktop\\中公\\第四阶段\\day05\\pages\\img\\banner3.jpg", "jpg",
                 null);
         // 7、返回数组。包含组名和图片的路径。
         for (String string : strings) {

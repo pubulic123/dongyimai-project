@@ -1,0 +1,36 @@
+server:
+  port: 9003
+spring:
+  main: #允许多个feign调用同一个服务
+    allow-bean-definition-overriding: true
+  application:
+    name: canal
+eureka:
+  client:
+    service-url:
+      defaultZone: http://127.0.0.1:8761/eureka
+  instance:
+    prefer-ip-address: true
+feign:
+  hystrix:
+    enabled: true
+#hystrix 配置
+hystrix:
+  command:
+    default:
+      execution:
+        timeout:
+          #如果enabled设置为false，则请求超时交给ribbon控制
+          enabled: true
+        isolation:
+          strategy: SEMAPHORE
+#canal配置
+canal:
+  client:
+    instances:
+      example:
+        host: 192.168.237.128
+        port: 11111
+redis:
+  host: 192.168.188.146
+  port: 6379

@@ -144,4 +144,15 @@ public class ItemController {
         List<Item> list = itemService.findAll();
         return new Result<List<Item>>(true, StatusCode.OK,"查询成功",list) ;
     }
+
+    /***
+     * 根据审核状态查询Sku
+     * @param status
+     * @return
+     */
+    @GetMapping("/status/{status}")
+    public Result<List<Item>> findByStatus(@PathVariable String status){
+        List<Item> list = itemService.findByStatus(status);
+        return new Result<List<Item>>(true,StatusCode.OK,"查询成功",list);
+    }
 }

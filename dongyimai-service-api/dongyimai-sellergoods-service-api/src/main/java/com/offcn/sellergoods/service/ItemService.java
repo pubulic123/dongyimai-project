@@ -67,4 +67,9 @@ public interface ItemService extends IService<Item> {
      * @return
      */
     List<Item> findAll();
+
+    /**
+     * 根据状态查询SKU列表
+     */
+    List<Item> findByStatus(String status);
 }

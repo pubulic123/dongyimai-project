@@ -213,4 +213,11 @@ public class ItemServiceImpl extends ServiceImpl<ItemMapper,Item> implements Ite
     public List<Item> findAll() {
         return this.list(new QueryWrapper<Item>());
     }
+
+    @Override
+    public List<Item> findByStatus(String status) {
+        QueryWrapper<Item> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("status",status);
+        return this.list(queryWrapper);
+    }
 }

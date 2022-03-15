@@ -11,6 +11,7 @@ import org.springframework.context.annotation.ComponentScans;
 @EnableDiscoveryClient
 @MapperScan("com.offcn.sellergoods.dao")
 //@ComponentScan(basePackages = {"com.offcn.config"})
+//卖家商品信息服务
 public class SellerGoodsApplication {
     public static void main(String[] args) {
         SpringApplication.run(SellerGoodsApplication.class);

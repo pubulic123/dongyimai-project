@@ -11,6 +11,10 @@
 
     <artifactId>dongyimai-service-api</artifactId>
     <packaging>pom</packaging>
+    <modules>
+        <module>dongyimai-content-service-api</module>
+        <module>dongyimai-search-service-api</module>
+    </modules>
     <dependencies>
         <dependency>
             <groupId>com.offcn</groupId>
