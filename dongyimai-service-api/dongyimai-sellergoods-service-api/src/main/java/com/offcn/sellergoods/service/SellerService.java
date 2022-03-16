@@ -5,6 +5,7 @@ import com.offcn.entity.PageResult;
 import com.offcn.sellergoods.pojo.Seller;
 
 import java.util.List;
+
 /****
  * @Author:ujiuye
  * @Description:Seller业务层接口

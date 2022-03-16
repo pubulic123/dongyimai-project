@@ -5,6 +5,8 @@ import com.offcn.entity.PageResult;
 import com.offcn.sellergoods.pojo.TypeTemplate;
 
 import java.util.List;
+import java.util.Map;
+
 /****
  * @Author:ujiuye
  * @Description:TypeTemplate业务层接口
@@ -67,4 +69,11 @@ public interface TypeTemplateService extends IService<TypeTemplate> {
      * @return
      */
     List<TypeTemplate> findAll();
+
+    /**
+     * 根据TypeTemplate ID查询相应的规格列表
+     * @param id
+     * @return
+     */
+    List<Map> findSpecList(Long id);
 }

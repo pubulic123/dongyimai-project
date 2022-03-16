@@ -2,9 +2,11 @@ package com.offcn.sellergoods.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.offcn.entity.PageResult;
+import com.offcn.sellergoods.group.GoodsEntity;
 import com.offcn.sellergoods.pojo.Goods;
 
 import java.util.List;
+
 /****
  * @Author:ujiuye
  * @Description:Goods业务层接口
@@ -45,26 +47,51 @@ public interface GoodsService extends IService<Goods> {
 
     /***
      * 修改Goods数据
-     * @param goods
+     * @param goodsEntity
      */
-    void update(Goods goods);
-
-    /***
-     * 新增Goods
-     * @param goods
-     */
-    void add(Goods goods);
+    void update(GoodsEntity goodsEntity);
 
     /**
      * 根据ID查询Goods
      * @param id
      * @return
      */
-     Goods findById(Long id);
+     GoodsEntity findById(Long id);
 
     /***
      * 查询所有Goods
      * @return
      */
     List<Goods> findAll();
+
+    /***
+     * 新增Goods
+     * @param goodsEntity
+     */
+    void add(GoodsEntity goodsEntity);
+
+    /***
+     * 商品审核
+     * @param goodsId
+     */
+    void audit(Long goodsId);
+
+    /***
+     * 商品下架
+     * @param goodsId
+     */
+    void pull(Long goodsId);
+
+    /***
+     * 商品上架
+     * @param goodsId
+     */
+    void put(Long goodsId);
+
+    /**
+     * 批量上架
+     * @param ids
+     * @return
+     */
+    int putMany(Long[] ids);
 }

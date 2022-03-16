@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
 import java.util.List;
+
 /****
  * @Author:ujiuye
  * @Description:ItemCat业务层接口实现类
@@ -138,12 +139,7 @@ public class ItemCatServiceImpl extends ServiceImpl<ItemCatMapper,ItemCat> imple
         return this.list(new QueryWrapper<ItemCat>());
     }
 
-    /**
-     * 根据父级ID查询分类列表
-     *
-     * @param parentId
-     * @return
-     */
+    @Override
     public List<ItemCat> findByParentId(Long parentId) {
         ItemCat itemCat = new ItemCat();
         itemCat.setParentId(parentId);

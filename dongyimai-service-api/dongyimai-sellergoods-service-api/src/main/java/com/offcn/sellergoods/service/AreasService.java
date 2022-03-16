@@ -5,6 +5,7 @@ import com.offcn.entity.PageResult;
 import com.offcn.sellergoods.pojo.Areas;
 
 import java.util.List;
+
 /****
  * @Author:ujiuye
  * @Description:Areas业务层接口

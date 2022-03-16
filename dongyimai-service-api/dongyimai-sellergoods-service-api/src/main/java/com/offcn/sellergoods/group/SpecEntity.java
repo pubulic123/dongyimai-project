@@ -30,4 +30,12 @@ public class SpecEntity implements Serializable {
     public void setSpecificationOptionList(List<SpecificationOption> specificationOptionList) {
         this.specificationOptionList = specificationOptionList;
     }
+
+    @Override
+    public String toString() {
+        return "SpecEntity{" +
+                "specification=" + specification +
+                ", specificationOptionList=" + specificationOptionList +
+                '}';
+    }
 }

@@ -5,9 +5,9 @@ import com.offcn.entity.Result;
 import com.offcn.entity.StatusCode;
 import com.offcn.sellergoods.pojo.Brand;
 import com.offcn.sellergoods.service.BrandService;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -16,8 +16,8 @@ import java.util.Map;
 @RestController
 @RequestMapping("/brand")
 @CrossOrigin
+@Api(tags = "BrandController")
 public class BrandController {
-
     @Autowired
     private BrandService brandService;
 
@@ -25,117 +25,105 @@ public class BrandController {
      * 查询全部数据
      * @return
      */
-    @GetMapping //不写value值默认调用根路径
-    public Result<List<Brand>> findAll(){
-        List<Brand> brandList = brandService.findAll();
-        return new Result<List<Brand>>(true, StatusCode.OK,"查询成功",brandList) ;
+    @GetMapping
+    public Result<List<Brand>> findAll() {
+        List<Brand> list = brandService.findAll();
+        return new Result(true, StatusCode.OK, "查询成功", list);
     }
-    /***
-     * 根据ID查询Brand数据
+
+    /**
+     * 根据id查询brand
+     *
      * @param id
      * @return
      */
     @GetMapping("/{id}")
-    public Result<Brand> findById(@PathVariable Long id){
-        //调用BrandService实现根据主键查询Brand
+    public Result<Brand> findById(@PathVariable int id) {
         Brand brand = brandService.findById(id);
-        return new Result<Brand>(true,StatusCode.OK,"查询成功",brand);
+        return new Result<>(true, StatusCode.OK, "查询成功", brand);
     }
 
-    /***
-     * 新增Brand数据
-     * @pa am brand
+    /**
+     * 根据请求体中的brand实体类添加
+     *
+     * @param brand
      * @return
      */
     @PostMapping
-    public Result add(@RequestBody   Brand brand){
-        //调用BrandService实现添加Brand
-        try {
-            brandService.add(brand);
-            return new Result(true,StatusCode.OK,"添加成功");
-        } catch (Exception e) {
-            e.printStackTrace();
-            return new Result(false,StatusCode.ERROR,"添加失败");
-        }
+    public Result add(@RequestBody Brand brand) {
+        brandService.add(brand);
+        return new Result(true, StatusCode.OK, "添加成功");
     }
 
-    /***
-     * 修改Brand数据
+    /**
+     * 路径传入id，请求体传入brand实体，根据id修改brand
+     *
      * @param brand
      * @param id
      * @return
      */
-    @PutMapping(value="/{id}")
-    public Result update(@RequestBody  Brand brand,@PathVariable Long id){
-        try {
-            //设置主键值
-            brand.setId(id);
-            //调用BrandService实现修改Brand
-            brandService.update(brand);
-            return new Result(true,StatusCode.OK,"修改成功");
-        } catch (Exception e) {
-            e.printStackTrace();
-            return new Result(false,StatusCode.ERROR,"修改失败");
-        }
+    @PutMapping("/{id}")
+    public Result update(@RequestBody Brand brand, @PathVariable Long id) {
+        brand.setId(id);
+        brandService.update(brand);
+        return new Result(true, StatusCode.OK, "修改成功");
     }
 
-    /***
-     * 根据ID删除品牌数据
+    /**
+     * Url传入id删除数据库对应实体类
+     *
      * @param id
      * @return
      */
-    @DeleteMapping(value = "/{id}" )
-    public Result delete(@PathVariable Long id){
-        try {
-            //调用BrandService实现根据主键删除
-            brandService.delete(id);
-            return new Result(true,StatusCode.OK,"删除成功");
-        } catch (Exception e) {
-            e.printStackTrace();
-            return new Result(false,StatusCode.ERROR,"删除失败");
-        }
+    @DeleteMapping("/{id}")
+    public Result delete(@PathVariable Long id) {
+        brandService.delete(id);
+        return new Result(true, StatusCode.OK, "删除成功");
     }
 
-    /***
-     * 多条件搜索品牌数据
+    /**
+     * 根据brand参数查询列表
+     *
      * @param brand
      * @return
      */
-    @PostMapping(value = "/search" )
-    public Result<List<Brand>> findList(@RequestBody(required = false) Brand brand){
+    @PostMapping("/search")
+    public Result<List<Brand>> findList(@RequestBody Brand brand) {
         List<Brand> list = brandService.findList(brand);
-        return new Result<List<Brand>>(true,StatusCode.OK,"查询成功",list);
+        return new Result(true, StatusCode.OK, "查询成功", list);
     }
 
-    /***
-     * Brand分页搜索实现
-     * @param page:当前页
-     * @param size:每页显示多少条
+    /**
+     * 无条件分页查询，URL传入page，size
+     *
+     * @param page
+     * @param size
      * @return
      */
-    @GetMapping(value = "/search/{page}/{size}" )
-    public Result<PageResult<Brand>> findPage(@PathVariable  int page, @PathVariable  int size){
-        //调用BrandService实现分页查询Brand
+    @GetMapping("/search/{page}/{size}")
+    public Result<PageResult<Brand>> findPage(@PathVariable int page, @PathVariable int size) {
         PageResult<Brand> pageResult = brandService.findPage(page, size);
-        return new Result<PageResult<Brand>>(true,StatusCode.OK,"查询成功",pageResult);
+        return new Result<>(true, StatusCode.OK, "查询成功", pageResult);
     }
 
-    /***
-     * 分页搜索实现
+    /**
+     * 分页条件查询
+     *
      * @param brand
      * @param page
      * @param size
      * @return
      */
-    @PostMapping(value = "/search/{page}/{size}" )
-    public Result<PageResult> findPage(@RequestBody(required = false) Brand brand, @PathVariable  int page, @PathVariable  int size){
-        //执行搜索
+    @PostMapping("/search/{page}/{size}")
+    public Result findPage(@RequestBody(required = false) Brand brand, @PathVariable int page, @PathVariable int size) {
         PageResult<Brand> pageResult = brandService.findPage(brand, page, size);
-        return new Result(true,StatusCode.OK,"查询成功",pageResult);
+        return new Result<>(true, StatusCode.OK, "查询成功", pageResult);
     }
-    @ApiOperation(value = "查询品牌下拉列表",notes = "查询品牌下拉列表",tags = {"BrandController"})
+
+    @ApiOperation(value = "Brand下拉列表查询", notes = "Brand下拉列表查询详情", tags = "BrandController")
     @GetMapping("/selectOptions")
-    public ResponseEntity<List<Map>> selectOptions(){
-        return ResponseEntity.ok(brandService.selectOptions());
+    public Result<List<Map<String, String>>> selectOptions() {
+        List<Map<String, String>> mapList = brandService.selectOptions();
+        return new Result<>(true, StatusCode.OK, "查询成功", mapList);
     }
 }

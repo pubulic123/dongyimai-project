@@ -11,7 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Map;
 
 /****
  * @Author:ujiuye
@@ -103,6 +102,7 @@ public class SpecificationController {
     public Result update(@RequestBody @ApiParam(name = "Specification对象",value = "传入JSON数据",required = false) SpecEntity specEntity,@PathVariable Long id){
         //设置主键值
         specEntity.getSpecification().setId(id);
+        //调用SpecificationService实现修改Specification
         specificationService.update(specEntity);
         return new Result(true,StatusCode.OK,"修改成功");
     }
@@ -114,19 +114,24 @@ public class SpecificationController {
      */
     @ApiOperation(value = "Specification添加",notes = "添加Specification方法详情",tags = {"SpecificationController"})
     @PostMapping
-    public Result add(@RequestBody  @ApiParam(name = "SpecEntity复合实体",value = "传入JSON数据",required = true) SpecEntity specEntity){
+    public Result add(@RequestBody  @ApiParam(name = "SpecEntity对象",value = "传入JSON数据",required = true) SpecEntity specEntity){
         //调用SpecificationService实现添加Specification
         specificationService.add(specEntity);
         return new Result(true,StatusCode.OK,"添加成功");
     }
 
+    /***
+     * 根据ID查询Specification数据
+     * @param id
+     * @return
+     */
     @ApiOperation(value = "Specification根据ID查询",notes = "根据ID查询Specification方法详情",tags = {"SpecificationController"})
     @ApiImplicitParam(paramType = "path", name = "id", value = "主键ID", required = true, dataType = "Long")
     @GetMapping("/{id}")
     public Result<SpecEntity> findById(@PathVariable Long id){
         //调用SpecificationService实现根据主键查询Specification
-        SpecEntity specification = specificationService.findById(id);
-        return new Result<SpecEntity>(true,StatusCode.OK,"查询成功",specification);
+        SpecEntity specEntity = specificationService.findById(id);
+        return new Result<>(true,StatusCode.OK,"查询成功",specEntity);
     }
 
     /***
@@ -139,11 +144,5 @@ public class SpecificationController {
         //调用SpecificationService实现查询所有Specification
         List<Specification> list = specificationService.findAll();
         return new Result<List<Specification>>(true, StatusCode.OK,"查询成功",list) ;
-    }
-
-    @ApiOperation(value = "查询规格下拉列表",notes = "查询规格下拉列表",tags = {"SpecificationController"})
-    @GetMapping("/selectOptions")
-    public List<Map> selectOptions() {
-        return specificationService.selectOptions();
     }
 }

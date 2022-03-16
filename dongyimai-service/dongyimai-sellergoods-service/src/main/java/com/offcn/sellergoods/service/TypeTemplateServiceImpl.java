@@ -1,17 +1,25 @@
 package com.offcn.sellergoods.service;
 
+import com.alibaba.fastjson.JSON;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.core.toolkit.CollectionUtils;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.offcn.entity.PageResult;
+import com.offcn.sellergoods.dao.SpecificationOptionMapper;
 import com.offcn.sellergoods.dao.TypeTemplateMapper;
+import com.offcn.sellergoods.pojo.SpecificationOption;
 import com.offcn.sellergoods.pojo.TypeTemplate;
 import com.offcn.sellergoods.service.TypeTemplateService;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
+import javax.annotation.Resource;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+
 /****
  * @Author:ujiuye
  * @Description:TypeTemplate业务层接口实现类
@@ -20,6 +28,8 @@ import java.util.List;
 @Service
 public class TypeTemplateServiceImpl extends ServiceImpl<TypeTemplateMapper,TypeTemplate> implements TypeTemplateService {
 
+    @Resource
+    private SpecificationOptionMapper specificationOptionMapper;
 
     /**
      * TypeTemplate条件+分页查询
@@ -140,5 +150,26 @@ public class TypeTemplateServiceImpl extends ServiceImpl<TypeTemplateMapper,Type
     @Override
     public List<TypeTemplate> findAll() {
         return this.list(new QueryWrapper<TypeTemplate>());
+    }
+
+    /**
+     * 查询规格(包含规格项)列表
+     * @param id
+     * @return
+     */
+    @Override
+    public List<Map> findSpecList(Long id) {
+        TypeTemplate typeTemplate = this.getById(id);
+        List<Map> mapList = JSON.parseArray(typeTemplate.getSpecIds(), Map.class);
+        if (CollectionUtils.isNotEmpty(mapList)){
+            for (Map map : mapList) {
+                Long specId =new Long((Integer) map.get("id"));
+                QueryWrapper<SpecificationOption> specificationOptionQueryWrapper = new QueryWrapper<>();
+                specificationOptionQueryWrapper.eq("spec_id",specId);
+                List<SpecificationOption> specificationOptionList = specificationOptionMapper.selectList(specificationOptionQueryWrapper);
+                map.put("options",specificationOptionList);
+            }
+        }
+        return mapList;
     }
 }

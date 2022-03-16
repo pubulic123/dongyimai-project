@@ -7,8 +7,7 @@ import org.apache.ibatis.annotations.Select;
 import java.util.List;
 import java.util.Map;
 
-public interface BrandMapper extends BaseMapper<Brand>  {
-
-    @Select("select id,name as text from tb_brand")
-    public List<Map> selectOptions();
+public interface BrandMapper extends BaseMapper<Brand> {
+    @Select("select `id`,`name` as text from tb_brand  ")
+    List<Map<String, String>> selectOptions();
 }

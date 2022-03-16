@@ -6,7 +6,6 @@ import com.offcn.sellergoods.group.SpecEntity;
 import com.offcn.sellergoods.pojo.Specification;
 
 import java.util.List;
-import java.util.Map;
 
 /****
  * @Author:ujiuye
@@ -63,17 +62,11 @@ public interface SpecificationService extends IService<Specification> {
      * @param id
      * @return
      */
-    SpecEntity findById(Long id);
+     SpecEntity findById(Long id);
 
     /***
      * 查询所有Specification
      * @return
      */
     List<Specification> findAll();
-
-    /**
-     * 查询规格下拉列表
-     * @return
-     */
-    public List<Map> selectOptions();
 }

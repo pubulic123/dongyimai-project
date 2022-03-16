@@ -3,6 +3,7 @@ package com.offcn.sellergoods.controller;
 import com.offcn.entity.PageResult;
 import com.offcn.entity.Result;
 import com.offcn.entity.StatusCode;
+import com.offcn.sellergoods.group.GoodsEntity;
 import com.offcn.sellergoods.pojo.Goods;
 import com.offcn.sellergoods.service.GoodsService;
 import io.swagger.annotations.*;
@@ -91,31 +92,31 @@ public class GoodsController {
 
     /***
      * 修改Goods数据
-     * @param goods
+     * @param goodsEntity
      * @param id
      * @return
      */
     @ApiOperation(value = "Goods根据ID修改",notes = "根据ID修改Goods方法详情",tags = {"GoodsController"})
     @ApiImplicitParam(paramType = "path", name = "id", value = "主键ID", required = true, dataType = "Long")
     @PutMapping(value="/{id}")
-    public Result update(@RequestBody @ApiParam(name = "Goods对象",value = "传入JSON数据",required = false) Goods goods,@PathVariable Long id){
+    public Result update(@RequestBody @ApiParam(name = "GoodsEntity对象",value = "传入JSON数据",required = false) GoodsEntity goodsEntity,@PathVariable Long id){
         //设置主键值
-        goods.setId(id);
+        goodsEntity.getGoods().setId(id);
         //调用GoodsService实现修改Goods
-        goodsService.update(goods);
+        goodsService.update(goodsEntity);
         return new Result(true,StatusCode.OK,"修改成功");
     }
 
     /***
      * 新增Goods数据
-     * @param goods
+     * @param goodsEntity
      * @return
      */
     @ApiOperation(value = "Goods添加",notes = "添加Goods方法详情",tags = {"GoodsController"})
     @PostMapping
-    public Result add(@RequestBody  @ApiParam(name = "Goods对象",value = "传入JSON数据",required = true) Goods goods){
+    public Result add(@RequestBody  @ApiParam(name = "GoodsEntity对象",value = "传入JSON数据",required = true) GoodsEntity goodsEntity){
         //调用GoodsService实现添加Goods
-        goodsService.add(goods);
+        goodsService.add(goodsEntity);
         return new Result(true,StatusCode.OK,"添加成功");
     }
 
@@ -127,10 +128,10 @@ public class GoodsController {
     @ApiOperation(value = "Goods根据ID查询",notes = "根据ID查询Goods方法详情",tags = {"GoodsController"})
     @ApiImplicitParam(paramType = "path", name = "id", value = "主键ID", required = true, dataType = "Long")
     @GetMapping("/{id}")
-    public Result<Goods> findById(@PathVariable Long id){
-        //调用GoodsService实现根据主键查询Goods
-        Goods goods = goodsService.findById(id);
-        return new Result<Goods>(true,StatusCode.OK,"查询成功",goods);
+    public Result<GoodsEntity> findById(@PathVariable Long id){
+        //调用GoodsService实现根据主键查询goodsEntity
+        GoodsEntity goodsEntity = goodsService.findById(id);
+        return new Result<GoodsEntity>(true,StatusCode.OK,"查询成功",goodsEntity);
     }
 
     /***
@@ -143,5 +144,58 @@ public class GoodsController {
         //调用GoodsService实现查询所有Goods
         List<Goods> list = goodsService.findAll();
         return new Result<List<Goods>>(true, StatusCode.OK,"查询成功",list) ;
+    }
+
+    /**
+     *
+     * 审核商品
+     * @param goodsId
+     * @return
+     */
+    @ApiOperation(value = "审核商品",notes = "审核商品方法详情",tags = {"GoodsController"})
+    @ApiImplicitParam(paramType = "path", name = "goodsId", value = "主键ID", required = true, dataType = "Long")
+    @PutMapping("/audit/{goodsId}")
+    public Result audit(@PathVariable("goodsId") Long goodsId){
+        goodsService.audit(goodsId);
+        return new Result(true,StatusCode.OK,"审核成功");
+    }
+
+    /**
+     * 下架商品
+     * @param goodsId
+     * @return
+     */
+    @ApiOperation(value = "下架商品",notes = "下架商品方法详情",tags = {"GoodsController"})
+    @ApiImplicitParam(paramType = "path", name = "goodsId", value = "主键ID", required = true, dataType = "Long")
+    @PutMapping("/pull/{goodsId}")
+    public Result<String> pull(@PathVariable("goodsId") Long goodsId){
+        goodsService.pull(goodsId);
+        return new Result<>(true,StatusCode.OK,"下架成功");
+    }
+
+    /**
+     * 上架商品
+     * @param goodsId
+     * @return
+     */
+    @ApiOperation(value = "上架商品",notes = "上架商品方法详情",tags = {"GoodsController"})
+    @ApiImplicitParam(paramType = "path", name = "goodsId", value = "主键ID", required = true, dataType = "Long")
+    @PutMapping("/put/{goodsId}")
+    public Result<String> put(@PathVariable("goodsId") Long goodsId){
+        goodsService.put(goodsId);
+        return new Result<>(true,StatusCode.OK,"上架成功");
+    }
+
+    /**
+     * 批量上架商品
+     * @param ids
+     * @return
+     */
+    @ApiOperation(value = "批量上架商品",notes = "批量上架商品方法详情",tags = {"GoodsController"})
+    @ApiImplicitParam(paramType = "path", name = "ids", value = "主键ID数组", required = true, dataType = "String")
+    @PutMapping("/putMany/{ids}")
+    public Result<String> putMany(@PathVariable Long[] ids){
+        int count = goodsService.putMany(ids);
+        return new Result(true,StatusCode.OK,"上架"+count+"个商品");
     }
 }
