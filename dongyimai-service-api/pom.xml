@@ -14,6 +14,8 @@
     <modules>
         <module>dongyimai-content-service-api</module>
         <module>dongyimai-search-service-api</module>
+        <module>dongyimai-item-web-api</module>
+        <module>dongyimai-user-service-api</module>
     </modules>
     <dependencies>
         <dependency>

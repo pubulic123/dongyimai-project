@@ -1,0 +1,45 @@
+spring:
+  cloud:
+    gateway:
+      globalcors:
+        cors-configurations:
+        '[/**]': #匹配所有请求
+          allowedOrigins: "*"#跨域处理允许所有的域
+          allowedMethods: #支持的方法
+          - GET
+          - POST
+          - PUT
+          - DELETE
+  routes:
+    - id: dongyimai_goods_route
+    uri: lb://DYM-SELLERGOODS
+    predicates:
+      #- Host=cloud.ujiuye.com**
+      - Path=/api/brand**
+      filters:
+        - StripPrefix=1
+        - name: RequestRateLimiter #请求数限流名字不能随便写，使用默认的facatory
+          args:
+            key-resolver: "#{@ipKeyResolver}"
+            redis-rate-limiter.replenishRate: 1
+            redis-rate-limiter.burstCapacity: 1
+        #用户微服务
+        - id: dongyimai_user_route
+      uri: lb://DYM-USER
+      predicates:
+        - 	Path=/api/album/**,/api/brand/**,/api/cache/**,/api/categoryBrand/**,/api/category/**,/api/para/**,/api/pref/**,/api/sku/**,/api/spec/**,/api/spu/**,/api/stockBack/**,/api/template/**
+      filters:
+        - StripPrefix=1
+  application:
+    name: gateway-web
+  #Redis配置
+  redis:
+    host: 192.168.237.128
+    port: 6379
+
+server:
+  port: 8001
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka

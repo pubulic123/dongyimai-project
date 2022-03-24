@@ -4,6 +4,7 @@ import com.alibaba.otter.canal.protocol.CanalEntry;
 import com.offcn.content.feign.ContentFeign;
 import com.offcn.content.pojo.Content;
 import com.offcn.entity.Result;
+import com.offcn.item.feign.PageFeign;
 import com.xpand.starter.canal.annotation.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
@@ -58,5 +59,41 @@ public class CanalDataEventListener {
             }
         }
         return categoryId;
+    }
+
+    @Autowired
+    private PageFeign pageFeign;
+
+    @ListenPoint(destination = "example",
+            schema = "dongyimaidb",
+            table = {"tb_goods"},
+            eventType = {CanalEntry.EventType.UPDATE, CanalEntry.EventType.INSERT, CanalEntry.EventType.DELETE})
+    public void onEventCustomSpu(CanalEntry.EventType eventType, CanalEntry.RowData rowData) {
+
+        //判断操作类型
+        if (eventType == CanalEntry.EventType.DELETE) {
+            String goodsId = "";
+            List<CanalEntry.Column> beforeColumnsList = rowData.getBeforeColumnsList();
+            for (CanalEntry.Column column : beforeColumnsList) {
+                if (column.getName().equals("id")) {
+                    goodsId = column.getValue();//goodsId
+                    break;
+                }
+            }
+            //todo 删除静态页
+
+        }else{
+            //新增 或者 更新
+            List<CanalEntry.Column> afterColumnsList = rowData.getAfterColumnsList();
+            String goodsId = "";
+            for (CanalEntry.Column column : afterColumnsList) {
+                if (column.getName().equals("id")) {
+                    goodsId = column.getValue();
+                    break;
+                }
+            }
+            //更新 生成静态页
+            pageFeign.createHtml(Long.valueOf(goodsId));
+        }
     }
 }

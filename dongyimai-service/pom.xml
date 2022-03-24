@@ -16,11 +16,15 @@
         <module>dongyimai-file-service</module>
         <module>dongyimai-content-service</module>
         <module>dongyimai-search-service</module>
+        <module>dongyimai_sms_service</module>
+        <module>dongyimai-user-service</module>
+
     </modules>
 
     <properties>
         <maven.compiler.source>8</maven.compiler.source>
         <maven.compiler.target>8</maven.compiler.target>
     </properties>
+
 
 </project>

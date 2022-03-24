@@ -1,6 +1,11 @@
 package com.offcn.entity;
 
-public class Result<T> {
+import java.io.Serializable;
+
+/***
+ * 服务器与客户端交互结果类
+ */
+public class Result<T> implements Serializable {
     private boolean flag;//是否成功
     private Integer code;//返回码
     private String message;//返回消息
@@ -24,8 +29,6 @@ public class Result<T> {
         this.code = StatusCode.OK;
         this.message = "操作成功!";
     }
-
-    // getter and setter.....
 
     public boolean isFlag() {
         return flag;
